@@ -51,8 +51,9 @@ function EditCat(){
             $("#popUpID2").hide();
             getDataCat();   
         },
-        error: function() {
-            console.log("gagal");
+        error: function (data) {
+            var parsedData = JSON.parse(data);
+            alert(parsedData.message);
         }
     });
 }
@@ -73,8 +74,9 @@ function DeleteCat(){
             $("#popUpID3").hide();
             getDataCat();
         },
-        error: function(data) {
-            console.log("gagal");
+        error: function (data) {
+            var parsedData = JSON.parse(data);
+            alert(parsedData.message);
         }
     });
 }
@@ -100,7 +102,6 @@ $("#dltRow").click(function(){
 })
 
 function getDataCat() {
-    console.log(localStorage.getItem('userId'));
     $.ajax({
         type: "GET",
         url: "../controller/category.php", // Sesuaikan dengan lokasi PHP script Anda
@@ -109,10 +110,7 @@ function getDataCat() {
         },
         success: function (data) {
             var response = JSON.parse(data); 
-            // Tangani respons dari server
-            console.log(response, "ini apa");
 
-            // Ambil tabel dan hapus semua baris kecuali baris pertama (header)
             var tabel = $(".tabel");
             tabel.find("tr:gt(0)").remove();
 
@@ -127,14 +125,14 @@ function getDataCat() {
             });
             $("#popUpID").hide();
         },
-        error: function (error) {
-            alert(error);
+        error: function (data) {
+            var parsedData = JSON.parse(data);
+            alert(parsedData.message);
         }
     });
 }
 
 function getDataCatAdmin() {
-    console.log(localStorage.getItem('userId'));
     $.ajax({
         type: "POST",
         url: "../controller/category.php", // Sesuaikan dengan lokasi PHP script Anda
@@ -143,16 +141,10 @@ function getDataCatAdmin() {
             userName: localStorage.getItem('userName')
         },
         success: function (data) {
-            console.log(data);
             var response = JSON.parse(data); 
-            // Tangani respons dari server
-            console.log(response, "ini apa");
-
-            // Ambil tabel dan hapus semua baris kecuali baris pertama (header)
             var tabel = $(".tabel");
             tabel.find("tr:gt(0)").remove();
 
-            // Loop melalui data dari respons dan tambahkan setiap entri ke tabel
             $.each(response.categories, function (index, item) {
                 var newRow = $("<tr></tr>");
                 newRow.append('<td>' + (index + 1) + '.</td>');
@@ -163,8 +155,9 @@ function getDataCatAdmin() {
             });
             $("#popUpID").hide();
         },
-        error: function (error) {
-            alert(error);
+        error: function (data) {
+            var parsedData = JSON.parse(data);
+            alert(parsedData.message);
         }
     });
 }
@@ -182,8 +175,9 @@ function addcategory(){
         success: function() {
             getDataCat();
         },
-        error: function(error) {
-            console.error(error);
+        error: function (data) {
+            var parsedData = JSON.parse(data);
+            alert(parsedData.message);
         }
     }); 
 }

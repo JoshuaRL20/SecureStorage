@@ -15,7 +15,6 @@ function doLogin() {
             Password: userPassword
         },
         success: function(data) {
-            console.log(data, "Test data");
             var parsedData = JSON.parse(data);
             if (parsedData.status == "success") {
                 localStorage.setItem('userId', parsedData.userId);
@@ -26,10 +25,8 @@ function doLogin() {
                 alert("User tidak ditemukan atau password salah.");
             }
         },        
-        error: function(data) {
-            
-            var parsedData = JSON.parse(data.responseText);
-            console.log(parsedData, "error data");
+        error: function (data) {
+            var parsedData = JSON.parse(data);
             alert(parsedData.message);
         }
     });
