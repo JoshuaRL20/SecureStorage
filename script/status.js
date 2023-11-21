@@ -33,8 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         },
-        error: function () {
-            console.log('Gagal memeriksa sesi.');
+        error: function(data) {
+            var parsedData = JSON.parse(data.responseText);
+            alert(parsedData.message);
         }
     });
 });
@@ -52,7 +53,7 @@ $('#tri').on("change", function() {
 function doLogOut(){
     const userId = localStorage.getItem('userId');
     const sessionToken = localStorage.getItem('sessionToken');
-    console.log(userId, sessionToken, "Test Data");
+    
     if (userId && sessionToken) {
         // Panggil AJAX request untuk logout
         $.ajax({
@@ -65,7 +66,6 @@ function doLogOut(){
             },
             success: function(data) {
                 var parsedData = JSON.parse(data);
-                console.log(parsedData);
                 if (parsedData.status == "success") {
                     localStorage.removeItem('userId');
                     localStorage.removeItem('userName');
@@ -88,7 +88,7 @@ function doLogOut(){
             }
         });
     } else {
-        console.log("Pengguna belum login");
+        alert("Pengguna belum login");
     }
 }
 

@@ -15,7 +15,6 @@ function doLogin() {
             Password: userPassword
         },
         success: function(data) {
-            console.log(data, "Test data");
             var parsedData = JSON.parse(data);
             if (parsedData.status == "success") {
                 localStorage.setItem('userId', parsedData.userId);
@@ -27,9 +26,7 @@ function doLogin() {
             }
         },        
         error: function(data) {
-            
             var parsedData = JSON.parse(data.responseText);
-            console.log(parsedData, "error data");
             alert(parsedData.message);
         }
     });

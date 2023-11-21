@@ -51,8 +51,9 @@ function EditCat(){
             $("#popUpID2").hide();
             getDataCat();   
         },
-        error: function() {
-            console.log("gagal");
+        error: function(data) {
+            var parsedData = JSON.parse(data.responseText);
+            alert(parsedData.message);
         }
     });
 }
@@ -74,7 +75,8 @@ function DeleteCat(){
             getDataCat();
         },
         error: function(data) {
-            console.log("gagal");
+            var parsedData = JSON.parse(data.responseText);
+            alert(parsedData.message);
         }
     });
 }
@@ -100,7 +102,6 @@ $("#dltRow").click(function(){
 })
 
 function getDataCat() {
-    console.log(localStorage.getItem('userId'));
     $.ajax({
         type: "GET",
         url: "../controller/category.php", // Sesuaikan dengan lokasi PHP script Anda
@@ -109,8 +110,7 @@ function getDataCat() {
         },
         success: function (data) {
             var response = JSON.parse(data); 
-            // Tangani respons dari server
-            console.log(response, "ini apa");
+            // Tangani respons dari server;
 
             // Ambil tabel dan hapus semua baris kecuali baris pertama (header)
             var tabel = $(".tabel");
@@ -127,14 +127,14 @@ function getDataCat() {
             });
             $("#popUpID").hide();
         },
-        error: function (error) {
-            alert(error);
+        error: function(data) {
+            var parsedData = JSON.parse(data.responseText);
+            alert(parsedData.message);
         }
     });
 }
 
-function getDataCatAdmin() {
-    console.log(localStorage.getItem('userId'));
+function getDataCatAdmin() {;
     $.ajax({
         type: "POST",
         url: "../controller/category.php", // Sesuaikan dengan lokasi PHP script Anda
@@ -143,10 +143,8 @@ function getDataCatAdmin() {
             userName: localStorage.getItem('userName')
         },
         success: function (data) {
-            console.log(data);
             var response = JSON.parse(data); 
             // Tangani respons dari server
-            console.log(response, "ini apa");
 
             // Ambil tabel dan hapus semua baris kecuali baris pertama (header)
             var tabel = $(".tabel");
@@ -163,8 +161,9 @@ function getDataCatAdmin() {
             });
             $("#popUpID").hide();
         },
-        error: function (error) {
-            alert(error);
+        error: function(data) {
+            var parsedData = JSON.parse(data.responseText);
+            alert(parsedData.message);
         }
     });
 }
@@ -182,8 +181,9 @@ function addcategory(){
         success: function() {
             getDataCat();
         },
-        error: function(error) {
-            console.error(error);
+        eerror: function(data) {
+            var parsedData = JSON.parse(data.responseText);
+            alert(parsedData.message);
         }
     }); 
 }
