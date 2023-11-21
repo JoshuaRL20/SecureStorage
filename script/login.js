@@ -25,8 +25,8 @@ function doLogin() {
                 alert("User tidak ditemukan atau password salah.");
             }
         },        
-        error: function(data) {
-            var parsedData = JSON.parse(data.responseText);
+        error: function (data) {
+            var parsedData = JSON.parse(data);
             alert(parsedData.message);
         }
     });

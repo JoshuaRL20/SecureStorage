@@ -34,12 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userRow = $resultUser->fetch_assoc();
         $hashedPassword = $userRow["password"];
 
-        // Memeriksa kecocokan kata sandi
         if (password_verify($userPassword, $hashedPassword)) {
-            // Login berhasil
+
             $sessionToken = bin2hex(random_bytes(32));
 
-            // Hapus sesi yang sudah ada
             $deleteExistingSessionsQuery = "DELETE FROM sessions WHERE UserId = ?";
             $deleteExistingSessionsStmt = $con->prepare($deleteExistingSessionsQuery);
             $deleteExistingSessionsStmt->bind_param("i", $userRow["UserId"]);
@@ -70,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $con->close();
 } else if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["action"])) {
     if ($_GET["action"] == "logout") {
-        // Metode GET untuk logout
+
         $userId = $_GET["userId"];
         $sessionToken = $_GET["sessionToken"];
 
@@ -88,7 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $deleteSessionStmt->close();
     } else if ($_GET["action"] == "checkSession") {
-        // Metode GET untuk memeriksa sesi
         $userId = $_GET["userId"];
         $sessionToken = $_GET["sessionToken"];
 

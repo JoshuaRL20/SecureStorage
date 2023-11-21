@@ -2,42 +2,43 @@ document.addEventListener("DOMContentLoaded", function () {
     
     const userId = localStorage.getItem('userId');
     const sessionToken = localStorage.getItem('sessionToken');
-
-    $.ajax({
-        type: 'get',
-        url: '../controller/login.php',
-        data: {
-            action: 'checkSession',
-            userId: userId,
-            sessionToken: sessionToken
-        },
-        success: function (data) {
-            var parsedData = JSON.parse(data);
-            if(parsedData.status != 'success'){
-                doLogOut();
-            }else { 
-                if (localStorage.getItem('userId') == null) {
-                    if (window.location.href.indexOf('home.html') === -1 && window.location.href.indexOf('login.html') === -1 && window.location.href.indexOf('register.html') === -1) {
-                        window.location.href = 'home.html';
+    if(userId != null || sessionToken != null){
+        $.ajax({
+            type: 'get',
+            url: '../controller/login.php',
+            data: {
+                action: 'checkSession',
+                userId: userId,
+                sessionToken: sessionToken
+            },
+            success: function (data) {
+                var parsedData = JSON.parse(data);
+                if(parsedData.status != 'success'){
+                    doLogOut();
+                }else { 
+                    if (localStorage.getItem('userId') == null) {
+                        if (window.location.href.indexOf('home.html') === -1 && window.location.href.indexOf('login.html') === -1 && window.location.href.indexOf('register.html') === -1) {
+                            window.location.href = 'home.html';
+                        }
+                        $('.homecontainer').hide();
+                    } else {
+                        var userName = localStorage.getItem('userName');
+                        if (userName) {
+                            $('#userlogged').text(userName);
+                        }
+                        $('.homecontainer').show();
+                        $('#loginRegister').hide();
+                        $('#segitiga').show();
+                        $('#userlogged').show();
                     }
-                    $('.homecontainer').hide();
-                } else {
-                    var userName = localStorage.getItem('userName');
-                    if (userName) {
-                        $('#userlogged').text(userName);
-                    }
-                    $('.homecontainer').show();
-                    $('#loginRegister').hide();
-                    $('#segitiga').show();
-                    $('#userlogged').show();
                 }
+            },
+            error: function (data) {
+                var parsedData = JSON.parse(data);
+                alert(parsedData.message);
             }
-        },
-        error: function(data) {
-            var parsedData = JSON.parse(data.responseText);
-            alert(parsedData.message);
-        }
-    });
+        });
+    } 
 });
 
 
@@ -53,7 +54,6 @@ $('#tri').on("change", function() {
 function doLogOut(){
     const userId = localStorage.getItem('userId');
     const sessionToken = localStorage.getItem('sessionToken');
-    
     if (userId && sessionToken) {
         // Panggil AJAX request untuk logout
         $.ajax({

@@ -51,8 +51,8 @@ function EditCat(){
             $("#popUpID2").hide();
             getDataCat();   
         },
-        error: function(data) {
-            var parsedData = JSON.parse(data.responseText);
+        error: function (data) {
+            var parsedData = JSON.parse(data);
             alert(parsedData.message);
         }
     });
@@ -74,8 +74,8 @@ function DeleteCat(){
             $("#popUpID3").hide();
             getDataCat();
         },
-        error: function(data) {
-            var parsedData = JSON.parse(data.responseText);
+        error: function (data) {
+            var parsedData = JSON.parse(data);
             alert(parsedData.message);
         }
     });
@@ -110,9 +110,7 @@ function getDataCat() {
         },
         success: function (data) {
             var response = JSON.parse(data); 
-            // Tangani respons dari server;
 
-            // Ambil tabel dan hapus semua baris kecuali baris pertama (header)
             var tabel = $(".tabel");
             tabel.find("tr:gt(0)").remove();
 
@@ -127,14 +125,14 @@ function getDataCat() {
             });
             $("#popUpID").hide();
         },
-        error: function(data) {
-            var parsedData = JSON.parse(data.responseText);
+        error: function (data) {
+            var parsedData = JSON.parse(data);
             alert(parsedData.message);
         }
     });
 }
 
-function getDataCatAdmin() {;
+function getDataCatAdmin() {
     $.ajax({
         type: "POST",
         url: "../controller/category.php", // Sesuaikan dengan lokasi PHP script Anda
@@ -144,13 +142,9 @@ function getDataCatAdmin() {;
         },
         success: function (data) {
             var response = JSON.parse(data); 
-            // Tangani respons dari server
-
-            // Ambil tabel dan hapus semua baris kecuali baris pertama (header)
             var tabel = $(".tabel");
             tabel.find("tr:gt(0)").remove();
 
-            // Loop melalui data dari respons dan tambahkan setiap entri ke tabel
             $.each(response.categories, function (index, item) {
                 var newRow = $("<tr></tr>");
                 newRow.append('<td>' + (index + 1) + '.</td>');
@@ -161,8 +155,8 @@ function getDataCatAdmin() {;
             });
             $("#popUpID").hide();
         },
-        error: function(data) {
-            var parsedData = JSON.parse(data.responseText);
+        error: function (data) {
+            var parsedData = JSON.parse(data);
             alert(parsedData.message);
         }
     });
@@ -181,8 +175,8 @@ function addcategory(){
         success: function() {
             getDataCat();
         },
-        eerror: function(data) {
-            var parsedData = JSON.parse(data.responseText);
+        error: function (data) {
+            var parsedData = JSON.parse(data);
             alert(parsedData.message);
         }
     }); 
